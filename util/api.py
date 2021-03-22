@@ -1,6 +1,7 @@
 import requests
 import logging
 import json
+from post import Post
 
 logging.basicConfig(level=logging.NOTSET)
 
@@ -23,9 +24,19 @@ def get_gender(name) -> str:
     return json["gender"]
 
 
-def get_posts() -> dict:
-    json = call_api("https://api.npoint.io/5abcca6f4e39b4955965")
-    return json
+def get_posts() -> list:
+    json_posts = call_api("https://api.npoint.io/5abcca6f4e39b4955965")
+    # print(json.dumps(json_posts, indent=4))
+    posts = []
+    for json_post in json_posts:
+        post = Post(
+            json_post["id"],
+            json_post["title"],
+            json_post["subtitle"],
+            json_post["body"]
+        )
+        posts.append(post)
+    return posts
 
 
 if __name__ == "__main__":
@@ -35,4 +46,4 @@ if __name__ == "__main__":
     print(name, age, gender)
 
     posts = get_posts()
-    print(json.dumps(posts, indent=4))
+    print(posts)

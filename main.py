@@ -13,7 +13,7 @@ def home():
 
 @app.route('/post/<post_id>')
 def read_post(post_id):
-    post = [post for post in api.get_posts() if post["id"] == int(post_id)][0]
+    post = [post for post in api.get_posts() if post.id == int(post_id)][0]
     return render_template("post.html", post=post)
 
 
